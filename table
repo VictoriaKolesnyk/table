@@ -1,0 +1,46 @@
+from random import randint
+
+size = int(input('size   '))
+
+matrix = [[randint(1, 50) for _ in range(size)] for _ in range(size)]
+
+
+def show(lst):
+    tmp = [0] * len(lst)
+    for i in range(len(lst)):
+        for j in range(len(lst[i])):
+            print('{:>4}'.format(lst[i][j]), end='')
+            tmp[j] += lst[i][j]
+        print()
+
+    for i in range(len(tmp)):
+        print('{:>4}'.format(tmp[i]), end='')
+    print()
+    print()
+    print()
+
+    return tmp
+
+
+def sort_columns(lst):
+    tmp = [0] * len(lst)
+    for i in range(len(lst)):
+        for j in range(len(lst)):
+            tmp[j] += lst[i][j]
+
+    for _ in range(len(lst)):
+        for j in range(len(lst)-1):
+            if tmp[j] > tmp[j+1]:
+                tmp[j], tmp[j+1] = tmp[j+1], tmp[j]
+                for i in range(len(lst)):
+                    lst[i][j], lst[i][j+1] = lst[i][j+1], lst[i][j]
+
+    for column in range(len(lst)):
+        for _ in range(len(lst)):
+            for i in range(len(lst)-1):
+                if lst[i][column] > lst[i+1][column] if column % 2 else lst[i][column] < lst[i+1][column]:
+                    lst[i][column], lst[i+1][column] = lst[i+1][column], lst[i][column]
+
+
+sort_columns(matrix)
+show(matrix)
